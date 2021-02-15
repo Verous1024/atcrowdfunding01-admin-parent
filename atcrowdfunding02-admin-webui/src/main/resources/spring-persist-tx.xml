@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd ">
+
+    <context:component-scan base-package="com.atguigu.crowd.service"/>
+    
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <aop:config>
+        <!--不用硬记切入点表达式，只需要记住 public Integer com.atguigu.crowd.AdminServiceImpl.saveAdmin(Admin admin)-->
+        <aop:pointcut id="txPoint" expression="execution(* *..*ServiceImpl.*(..))"/>
+        <!-- 将事务通知和切入点表达式关联到一起 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPoint"/>
+    </aop:config>
+
+    <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
+        <tx:attributes>
+            <!--name 属性指定当前要配置的事务方法的方法名 -->
+            <!-- 查询的方法通常设置为只读，便于数据库根据只读属性进行相关性能优化 -->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+
+            <!--REQUIRED默认值：表示当前方法必须工作在事务中，如果当前线程没有开启事务，则自己开启新事务，如果当前线程开启事务，则使用它
+            缺点：和别的sql操作在同一个线程时，就会使用同一个事务，一旦对方失败，本身也会受到影响
+            REQUIRES_NEW：不管当前线程是否有事务，都一定开启新事务，自己使用自己的事务
+            -->
+            <!--rollback-for 属性配置回滚的异常 -->
+            <!-- 默认值：运行时异常 -->
+            <!-- 建议值：编译时异常+运行时异常 -->
+            <tx:method name="save*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="remove*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="delete*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="batch*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+</beans>
