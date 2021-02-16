@@ -1,5 +1,6 @@
 package com.atguigu.crowd.mvc.config;
 
+import com.atguigu.crowd.constant.CrowdConstant;
 import com.atguigu.crowd.util.CrowdUtil;
 import com.atguigu.crowd.util.ResultEntity;
 import com.google.gson.Gson;
@@ -33,8 +34,6 @@ public class CrowdExceptionResolver {
      * @param exception 捕获的异常
      * @param request 请求对象
      * @param response 响应对象
-     * @return
-     * @throws IOException
      */
     private ModelAndView commonResolve(String viewName,Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
         //1、根据request判断是否是ajax请求
@@ -53,7 +52,7 @@ public class CrowdExceptionResolver {
         //4、非AJAX请求，即普通请求抛出了空指针异常，按下面流程处理
         //创建ModelAn，存储异常信息，存储需要转发的页面
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exception", exception);
+        modelAndView.addObject(CrowdConstant.ATTR_NAME_EXCEPTION, exception);
         modelAndView.setViewName(viewName);
 
         return modelAndView;
