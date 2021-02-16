@@ -27,6 +27,7 @@
             <props> <!--key 属性指定异常类型（全类名） -->
                 <!-- 文本标签体中指定异常对应的逻辑视图名称 -->
                 <prop key="java.lang.Exception">system-error</prop>
+                <prop key="com.atguigu.crowd.Exception.AccessForbiddenExcepiton">admin-login</prop>
             </props>
         </property>
         <!-- 使用 exceptionAttribute 可以修改异常对象存入请求域时使用的属性名 --> <!--<propertyname="exceptionAttribute"></property>-->
@@ -38,5 +39,19 @@
     <!-- 能支持springmvc更高级的一些功能，JSR303校验，快捷的ajax...映射动态请求 -->
     <mvc:annotation-driven/>
 
-
+    <mvc:view-controller path="/admin/to/login.html" view-name="admin-login"/> <!--直接到登陆页面-->
+    <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>
+    <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"/>
+    
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- /*对应一层路径，/**对应多层-->
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/admin/do/login.html"/>
+            <mvc:exclude-mapping path="/admin/to/login.html"/>
+            <mvc:exclude-mapping path="/admin/to/login/page.html"/>
+            <mvc:exclude-mapping path="/admin/do/logout.html"/>
+            <bean class="com.atguigu.crowd.mvc.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

@@ -11,6 +11,7 @@
     <base href="http://${pageContext.request.serverName }:${pageContext.request.serverPort }${pageContext.request.contextPath}/"/>
     <title>Title</title>
     <script type="text/javascript" src="jquery/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="layer/layer.js"></script>
     <script type="text/javascript">
         $(function () {
             $("#btn1").click(function () {
@@ -26,6 +27,10 @@
                     }
                 )
             });
+
+            $("#btn2").click(function () {
+                layer.msg("layer的弹框");
+            });
         });
     </script>
 </head>
@@ -33,6 +38,8 @@
 
 <a href="test/ssm.html">测试SSM整和环境</a><br/>
 
-<button id="btn1">send easy</button>
+<button id="btn1">send easy</button><br/>
+
+<button id="btn2">点我弹框</button><br/>
 </body>
 </html>

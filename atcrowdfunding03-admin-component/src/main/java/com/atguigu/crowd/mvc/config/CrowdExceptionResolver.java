@@ -1,5 +1,7 @@
 package com.atguigu.crowd.mvc.config;
 
+import com.atguigu.crowd.Exception.AccessForbiddenExcepiton;
+import com.atguigu.crowd.Exception.LoginFailedException;
 import com.atguigu.crowd.constant.CrowdConstant;
 import com.atguigu.crowd.util.CrowdUtil;
 import com.atguigu.crowd.util.ResultEntity;
@@ -22,6 +24,20 @@ import java.io.IOException;
 //@ControllerAdvice 注解用于表明将该类是一个 基于注解的异常处理机制需要的异常处理器
 @ControllerAdvice
 public class CrowdExceptionResolver {
+
+    @ExceptionHandler(value = AccessForbiddenExcepiton.class)
+    public ModelAndView resolveAccessForbiddenExcepiton(AccessForbiddenExcepiton exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String viewName = "admin-login";
+        return commonResolve(viewName, exception, request, response);
+    }
+
+
+    @ExceptionHandler(value = LoginFailedException.class)
+    public ModelAndView resolveLoginFailedException(LoginFailedException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String viewName = "admin-login";
+        return commonResolve(viewName, exception, request, response);
+    }
+
 
     @ExceptionHandler(value = NullPointerException.class)
     public ModelAndView resolveNullPointerException(NullPointerException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
