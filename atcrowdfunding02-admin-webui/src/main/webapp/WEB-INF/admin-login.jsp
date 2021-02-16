@@ -42,14 +42,17 @@
         </h2>
 
         <div class="form-group has-success has-feedback">
-            <input type="text" name="loginAcct" class="form-control" id="input_acct" placeholder="请输入登录账号" autofocus>
+            <input type="text" name="loginAcct" class="form-control" id="input_acct"
+                  value="${requestScope.tryLoginAcct}" placeholder="请输入登录账号" autofocus>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
+        <%-- 是否显示密码--%>
         <div class="form-group has-success has-feedback">
-            <input type="text" name="userPswd"  class="form-control" id="input_pswd" placeholder="请输入登录密码" style="margin-top:10px;">
+            <input type="password" name="userPswd"  class="form-control" id="input_pswd"
+                    placeholder="请输入登录密码" style="margin-top:10px;">
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
-        <p style="margin-left:47px;">${requestScope.exception.message}</p>
+        <p align="center">${requestScope.exception.message}</p>
         <button type="submit" class="btn btn-lg btn-success btn-block">登录</button>
     </form>
 </div>

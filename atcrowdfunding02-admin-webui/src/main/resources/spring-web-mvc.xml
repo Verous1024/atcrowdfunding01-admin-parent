@@ -42,7 +42,8 @@
     <mvc:view-controller path="/admin/to/login.html" view-name="admin-login"/> <!--直接到登陆页面-->
     <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>
     <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"/>
-    
+    <mvc:view-controller path="/admin/to/add/page.html" view-name="admin-add"/>
+
     <mvc:interceptors>
         <mvc:interceptor>
             <!-- /*对应一层路径，/**对应多层-->

@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.UUID;
 
 // 指定 Spring 给 Junit 提供的运行器类
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,6 +34,14 @@ public class CrowdTest {
 
     @Autowired
     private AdminService adminService;
+
+    @Test
+    public void testInsert500Recoreds() {
+        for (int i = 0; i < 300; i++) {
+            String name = UUID.randomUUID().toString().substring(0, 5);
+            adminMapper.insertSelective(new Admin(null,name,name,name,name+"@qq.com",null));
+        }
+    }
 
     @Test
     public void testTx() {

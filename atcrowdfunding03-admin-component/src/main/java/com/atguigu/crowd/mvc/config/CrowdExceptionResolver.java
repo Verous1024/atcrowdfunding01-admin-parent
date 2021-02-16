@@ -1,12 +1,13 @@
 package com.atguigu.crowd.mvc.config;
 
 import com.atguigu.crowd.Exception.AccessForbiddenExcepiton;
+import com.atguigu.crowd.Exception.LoginAcctAlreadyInUseException;
+import com.atguigu.crowd.Exception.LoginAcctAlreadyInUseForUpdateException;
 import com.atguigu.crowd.Exception.LoginFailedException;
 import com.atguigu.crowd.constant.CrowdConstant;
 import com.atguigu.crowd.util.CrowdUtil;
 import com.atguigu.crowd.util.ResultEntity;
 import com.google.gson.Gson;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,6 +26,18 @@ import java.io.IOException;
 @ControllerAdvice
 public class CrowdExceptionResolver {
 
+    @ExceptionHandler(value = LoginAcctAlreadyInUseForUpdateException.class)
+    public ModelAndView resolveAccessForbiddenExcepiton(LoginAcctAlreadyInUseForUpdateException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String viewName = "system-error";
+        return commonResolve(viewName, exception, request, response);
+    }
+
+    @ExceptionHandler(value = LoginAcctAlreadyInUseException.class)
+    public ModelAndView resolveAccessForbiddenExcepiton(LoginAcctAlreadyInUseException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String viewName = "admin-add";
+        return commonResolve(viewName, exception, request, response);
+    }
+
     @ExceptionHandler(value = AccessForbiddenExcepiton.class)
     public ModelAndView resolveAccessForbiddenExcepiton(AccessForbiddenExcepiton exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String viewName = "admin-login";
@@ -35,7 +48,17 @@ public class CrowdExceptionResolver {
     @ExceptionHandler(value = LoginFailedException.class)
     public ModelAndView resolveLoginFailedException(LoginFailedException exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String viewName = "admin-login";
-        return commonResolve(viewName, exception, request, response);
+        String message = exception.getMessage();
+        String[] splits = message.split("&"); //取出异常信息、以及附带的用户信息、用户密码
+        System.out.println(splits[0]);
+        System.out.println(splits[1]);
+        System.out.println(splits[2]);
+        //取出异常信息拼接为真实错误信息，交给s
+        AccessForbiddenExcepiton new_exception = new AccessForbiddenExcepiton(splits[0]);
+        ModelAndView modelAndView = commonResolve(viewName, new_exception, request, response)
+                .addObject(CrowdConstant.ATTR_NAME_TRY_LOGIN_ACCT,splits[1])
+                .addObject(CrowdConstant.ATTR_NAME_TRY_USER_PSWD,splits[2]);
+        return modelAndView ;
     }
 
 

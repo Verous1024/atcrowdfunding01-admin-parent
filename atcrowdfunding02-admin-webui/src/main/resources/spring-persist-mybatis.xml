@@ -20,6 +20,23 @@
         <property name="configLocation" value="classpath:mybaits/mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:mybaits/mapper/*Mapper.xml"/>
         <property name="dataSource" ref="dataSource"/>
+
+        <!--配置插件-->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <props>
+                            <!--指定数据库方言-->
+                            <prop key="dialect">mysql</prop>
+                            <!--配置页码的合理修正-->
+                            <prop key="reasonable">true</prop>
+                        </props>
+                    </property>
+                </bean>
+            </array>
+        </property>
+
     </bean>
 
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
