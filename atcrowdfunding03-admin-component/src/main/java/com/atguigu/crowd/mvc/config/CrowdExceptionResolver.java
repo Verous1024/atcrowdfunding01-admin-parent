@@ -79,7 +79,7 @@ public class CrowdExceptionResolver {
         if (CrowdUtil.judgeRequestType(request)) {
 
             //2、将异常信息封装到resultEntity中
-            ResultEntity<Object> resultEntity = ResultEntity.failedWithData(exception.getMessage());
+            ResultEntity<Object> resultEntity = ResultEntity.failed(exception.getMessage());
 
             //3、创建GSON对象，处理为json数据，然后返回给浏览器
             Gson gson = new Gson();

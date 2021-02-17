@@ -8,7 +8,9 @@ package com.atguigu.crowd.test;
  */
 
 import com.atguigu.crowd.entity.Admin;
+import com.atguigu.crowd.entity.Role;
 import com.atguigu.crowd.mapper.AdminMapper;
+import com.atguigu.crowd.mapper.RoleMapper;
 import com.atguigu.crowd.service.api.AdminService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +36,16 @@ public class CrowdTest {
 
     @Autowired
     private AdminService adminService;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Test
+    public void testInsert500Recoreds2RoleTable() {
+        for (int i = 0; i < 233; i++) {
+            roleMapper.insertSelective(new Role(null,"role"+i));
+        }
+    }
 
     @Test
     public void testInsert500Recoreds() {
