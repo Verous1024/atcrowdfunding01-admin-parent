@@ -39,11 +39,13 @@
     <!-- 能支持springmvc更高级的一些功能，JSR303校验，快捷的ajax...映射动态请求 -->
     <mvc:annotation-driven/>
 
+
     <mvc:view-controller path="/admin/to/login.html" view-name="admin-login"/> <!--直接到登陆页面-->
     <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"/>
     <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"/>
     <mvc:view-controller path="/admin/to/add/page.html" view-name="admin-add"/>
     <mvc:view-controller path="/role/to/page.html" view-name="role-page"/>
+    <mvc:view-controller path="/menu/to/page.html" view-name="menu-page"/>
 
     <mvc:interceptors>
         <mvc:interceptor>

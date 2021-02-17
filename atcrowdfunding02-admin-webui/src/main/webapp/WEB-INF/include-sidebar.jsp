@@ -12,17 +12,17 @@
             <li class="list-group-item tree-closed" >
                 <a href="main.html"><i class="glyphicon glyphicon-dashboard"></i> 控制面板</a>
             </li>
-            <li class="list-group-item tree-closed">
+            <li id="authority_management_li" class="list-group-item tree-closed">
                 <span><i class="glyphicon glyphicon glyphicon-tasks"></i> 权限管理 <span class="badge" style="float:right">3</span></span>
-                <ul style="margin-top:10px;display:none;">
+                <ul id="authority_management_ul" style="margin-top:10px;display:none;">
                     <li style="height:30px;">
-                        <a id="menu_href" href="admin/get/page.html"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
+                        <a id="admin_label"  href="admin/get/page.html"><i class="glyphicon glyphicon-user"></i> 用户维护</a>
                     </li>
                     <li style="height:30px;">
-                        <a href="role/to/page.html"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
+                        <a id="role_label" href="role/to/page.html"><i class="glyphicon glyphicon-king"></i> 角色维护</a>
                     </li>
                     <li style="height:30px;">
-                        <a href="permission.html"><i class="glyphicon glyphicon-lock"></i> 菜单维护</a>
+                        <a id="menu_label" href="menu/to/page.html"><i class="glyphicon glyphicon-lock"></i> 菜单维护</a>
                     </li>
                 </ul>
             </li>
@@ -72,3 +72,27 @@
         </ul>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        var url = window.location.href;
+        if(/admin/.test(url) && !(/admin.to.main.page.html/.test(url)) ){
+            $("#admin_label").css("color","red");
+            $("#authority_management_ul").css("display","block");
+            $("#authority_management_li").removeClass("tree-closed");
+        }
+
+        if(/role/.test(url)){
+            $("#role_label").css("color","red");
+            $("#authority_management_ul").css("display","block");
+            $("#authority_management_li").removeClass("tree-closed");
+        }
+
+        if(/menu/.test(url)){
+            $("#menu_label").css("color","red");
+            $("#authority_management_ul").css("display","block");
+            $("#authority_management_li").removeClass("tree-closed");
+        }
+
+
+    })
+</script>
