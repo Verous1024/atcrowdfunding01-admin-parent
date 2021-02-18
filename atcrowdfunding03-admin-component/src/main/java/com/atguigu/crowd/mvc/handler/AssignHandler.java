@@ -1,16 +1,18 @@
 package com.atguigu.crowd.mvc.handler;
 
+import com.atguigu.crowd.entity.Auth;
 import com.atguigu.crowd.entity.Role;
 import com.atguigu.crowd.service.api.AdminService;
+import com.atguigu.crowd.service.api.AuthService;
 import com.atguigu.crowd.service.api.RoleService;
+import com.atguigu.crowd.util.ResultEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Descriptions:
@@ -27,7 +29,37 @@ public class AssignHandler {
     @Autowired
     AdminService adminService;
 
-    @RequestMapping(value="/assign/do/role/assign.html",method = RequestMethod.POST)
+    @Autowired
+    AuthService authService;
+
+    @ResponseBody
+    @RequestMapping("assign/do/role/assign/auth.json")
+    public ResultEntity<String> saveRoleAuthRelathinship(
+            @RequestBody Map<String,List<Integer>> map) {
+        authService.saveRoleAuthRelathinship(map);
+
+        return ResultEntity.successWithoutData();
+    }
+
+    @ResponseBody
+    @RequestMapping("/assign/get/assigned/auth/id/by/role/id.json")
+    public ResultEntity<List<Integer>> getAssignedIdByRoleId(
+            @RequestParam("roleId") Integer roleId) {
+        List<Integer> roleIdList = authService.getAssignedIdByRoleId(roleId);
+        return ResultEntity.successWithData(roleIdList);
+    }
+
+    @ResponseBody
+    @RequestMapping("/assign/get/all/auth.json")
+    public ResultEntity<List<Auth>> getAllAuth() {
+
+        List<Auth> authList = authService.getAll();
+
+        return ResultEntity.successWithData(authList);
+    }
+
+
+    @RequestMapping(value = "/assign/do/role/assign.html", method = RequestMethod.POST)
     public String saveAdminRoleRelationship(
             @RequestParam("adminId") Integer adminId,
             @RequestParam("pageNum") Integer pageNum,
@@ -46,9 +78,9 @@ public class AssignHandler {
             Model model) {
 
         //1、查询已分配的角色
-       List<Role> assignedRoleList = roleService.getAssignedRole(adminId);
+        List<Role> assignedRoleList = roleService.getAssignedRole(adminId);
 
-       //2、查询未分配的角色
+        //2、查询未分配的角色
         List<Role> unAssignedRoleList = roleService.getUnassignedRole(adminId);
 
         //3、封装搭配模型上
