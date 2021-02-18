@@ -102,7 +102,7 @@
                             onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增
                     </button>--%>
                     <a href="admin/to/add/page.html" type="button" class="btn btn-primary" style="float:right;"
-                            onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增
+                       onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增
                     </a>
                     <br>
                     <hr style="clear:both;">
@@ -133,15 +133,19 @@
                                         <td>${admin.userName}</td>
                                         <td>${admin.email}</td>
                                         <td>
-                                            <button type="button" class="btn btn-success btn-xs">
-                                                <i class=" glyphicon glyphicon-check"></i></button>
-                                            <%--<button type="button" class="btn btn-primary btn-xs">
-                                                <i class=" glyphicon glyphicon-pencil"></i></button>--%>
-                                            <a href="admin/to/edit/page.html?adminId=${admin.id}&pageNum=${requestScope.pageInfo.pageNum}&keyword=${param.keyword}" class="btn btn-primary btn-xs">
+                                                <%-- <button type="button" class="btn btn-success btn-xs">
+                                                  <i class=" glyphicon glyphicon-check"></i></button>--%>
+                                            <a href="assign/to/assign/role/page.html?adminId=${admin.id }&pageNum=${requestScope.pageInfo.pageNum }&keyword=${param.keyword }"
+                                               class="btn btn-success btn-xs">
+                                                <i class=" glyphicon glyphicon-check"></i></a>
+                                                <%--<button type="button" class="btn btn-primary btn-xs">
+                                                    <i class=" glyphicon glyphicon-pencil"></i></button>--%>
+                                            <a href="admin/to/edit/page.html?adminId=${admin.id}&pageNum=${requestScope.pageInfo.pageNum}&keyword=${param.keyword}"
+                                               class="btn btn-primary btn-xs">
                                                 <i class=" glyphicon glyphicon-pencil"></i></a>
-                                            <%--<a href="admin/remove/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html"
-                                                 class="btn btn-danger btn-xs">
-                                                 <i class=" glyphicon glyphicon-remove"></i></a>--%>
+                                                <%--<a href="admin/remove/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html"
+                                                     class="btn btn-danger btn-xs">
+                                                     <i class=" glyphicon glyphicon-remove"></i></a>--%>
                                             <button url="admin/remove/${admin.id}/${requestScope.pageInfo.pageNum}/${param.keyword}.html"
                                                     type="button" class="btn btn-danger btn-xs delete_single_user_btn">
                                                 <i class=" glyphicon glyphicon-remove"></i></button>

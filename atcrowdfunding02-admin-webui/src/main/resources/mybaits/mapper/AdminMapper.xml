@@ -70,6 +70,17 @@
   <sql id="Base_Column_List" >
     id, login_acct, user_pswd, user_name, email, create_time
   </sql>
+  <!--void deleteOldRelationShip(Integer adminId);-->
+  <delete id="deleteOldRelationShip">
+    delete from inner_admin_role where admin_id = #{adminId}
+  </delete>
+  <!--void insertNewRelationship(Integer adminId, List<Integer> roleIdList);-->
+  <insert id="insertNewRelationship">
+    insert into inner_admin_role(admin_id,role_id) values
+    <foreach collection="roleIdList" item="roleId" separator=",">
+      (#{adminId},#{roleId})
+    </foreach>
+  </insert>
   <!-- selectAdminByKeyword -->
   <select id="selectAdminByKeyword" resultMap="BaseResultMap">
     select id, login_acct, user_pswd, user_name, email, create_time
