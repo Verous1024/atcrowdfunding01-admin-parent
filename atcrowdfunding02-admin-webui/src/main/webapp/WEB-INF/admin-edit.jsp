@@ -12,7 +12,7 @@
 <script type="text/javascript">
     $(function () {
 
-        var currentUserName = "${sessionScope.loginAdmin.userName}";
+        var currentUserName = $("#principal_originalAdmin_userName").text();
         var editUserName = "${requestScope.admin.loginAcct}";
         if (currentUserName == editUserName) {
             $("#updateUserPswdDiv").removeAttr("hidden");
@@ -63,10 +63,11 @@
                 </div>
                 <div class="panel-body">
                     <form action="admin/update.html" method="post" role="form">
+                        <span hidden="hidden" id="principal_originalAdmin_userName"><security:authentication property="principal.originalAdmin.userName"></security:authentication></span>
                         <input type="hidden" name="id" value="${requestScope.admin.id}"/>
                         <input type="hidden" name="pageNum" value="${param.pageNum}"/>
                         <input type="hidden" name="keyword" value="${param.keyword}"/>
-                        <%-- <p>${requestScope.exception.message}</p>--%>
+                        <p>${requestScope.exception.message}</p>
                         <div class="form-group">
                             <label for="updateLoginAcct">登录账号</label>
                             <input name="loginAcct" value="${requestScope.admin.loginAcct}" type="text"
@@ -74,6 +75,7 @@
                             <p id="update_account_reminder"></p>
                         </div>
                         <div id="updateUserPswdDiv" class="form-group" hidden="hidden">
+
                             <label for="updateUserPswd">登录密码</label>
                             <input name="userPswd" type="password" class="form-control" id="updateUserPswd"
                                    placeholder="请输入登录密码">

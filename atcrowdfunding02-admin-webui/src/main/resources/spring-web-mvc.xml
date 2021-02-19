@@ -19,6 +19,8 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
+    <!--<bean id="springSecurityFilterChain" class="com.atguigu.crowd.mvc.config.WebAppSecurityConfig"/>-->
+
     <!-- 配置基于 XML 的异常映射  SimpleMappingExceptionResolver -->
     <bean id="simpleMappingExceptionResolver"
           class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
@@ -47,9 +49,10 @@
     <mvc:view-controller path="/role/to/page.html" view-name="role-page"/>
     <mvc:view-controller path="/menu/to/page.html" view-name="menu-page"/>
 
-    <mvc:interceptors>
+    <!-- 使用spring security后，告别自定义男系欸去-->
+<!--    <mvc:interceptors>
         <mvc:interceptor>
-            <!-- /*对应一层路径，/**对应多层-->
+            &lt;!&ndash; /*对应一层路径，/**对应多层&ndash;&gt;
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/admin/do/login.html"/>
             <mvc:exclude-mapping path="/admin/to/login.html"/>
@@ -57,5 +60,5 @@
             <mvc:exclude-mapping path="/admin/do/logout.html"/>
             <bean class="com.atguigu.crowd.mvc.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
 </beans>

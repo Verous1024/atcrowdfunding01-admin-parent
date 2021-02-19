@@ -38,8 +38,8 @@ public class CrowdExceptionResolver {
         return commonResolve(viewName, exception, request, response);
     }
 
-    @ExceptionHandler(value = AccessForbiddenExcepiton.class)
-    public ModelAndView resolveAccessForbiddenExcepiton(AccessForbiddenExcepiton exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    @ExceptionHandler(value =Exception.class)
+    public ModelAndView resolveAccessForbiddenExcepiton(Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String viewName = "admin-login";
         return commonResolve(viewName, exception, request, response);
     }

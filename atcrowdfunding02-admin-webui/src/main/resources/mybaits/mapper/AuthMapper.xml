@@ -68,6 +68,14 @@
   <sql id="Base_Column_List" >
     id, name, title, category_id
   </sql>
+  <!--List<String> getAssignedAuthNameByAdminId(Integer adminId);adminId-->
+  <select id="selectAssignedAuthNameByAdminId" resultType="string">
+    SELECT DISTINCT t_auth.name
+    FROM t_auth
+    LEFT JOIN inner_role_auth ON t_auth.id = inner_role_auth.auth_id
+    LEFT JOIN inner_admin_role ON inner_admin_role.role_id = inner_role_auth.role_id
+    WHERE inner_admin_role.admin_id = #{adminId} and t_auth.name != "" and t_auth.name is not null
+  </select>
   <!--void insertNewRelationship(@Param("roleId") Integer roleId,@Param("authIdList") List<Integer> authIdList);-->
   <insert id="insertNewRelationship">
     insert into inner_role_auth(role_id,auth_id) values

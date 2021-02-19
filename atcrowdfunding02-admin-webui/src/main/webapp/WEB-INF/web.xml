@@ -3,14 +3,29 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+
+
     <!--1、启动spring容器的配置文件-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring-persist-*.xml</param-value>
+        <param-value>
+            classpath:spring-persist-*.xml
+        </param-value>
     </context-param>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <!--    配置Spring Security整合到web中，交给web.xml进行管理组件-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 
     <!--2、配置Servlet的请求转发配置文件-->
     <servlet>
@@ -61,4 +76,6 @@
         <filter-name>hiddenHttpMethodFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+
 </web-app>

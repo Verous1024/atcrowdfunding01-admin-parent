@@ -29,4 +29,6 @@ public interface AdminService {
     boolean updateAdmin(Admin admin);
 
     void saveAdminRoleRelationship(Integer adminId, List<Integer> roleIdList);
+
+    Admin getAdminByLoginAcct(String username);
 }

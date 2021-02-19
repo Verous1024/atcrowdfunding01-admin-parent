@@ -48,4 +48,6 @@
             <tx:method name="batch*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
+
+    <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bCryptPasswordEncoder"/>
 </beans>

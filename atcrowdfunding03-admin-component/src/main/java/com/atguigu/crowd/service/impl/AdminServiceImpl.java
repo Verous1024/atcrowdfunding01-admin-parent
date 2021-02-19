@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -33,12 +34,16 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     AdminMapper adminMapper;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public void saveAdmin(Admin admin) {
         //1、密码加密
         String userPswd = admin.getUserPswd();
-        String md5 = CrowdUtil.md5(userPswd);
-        admin.setUserPswd(md5);
+        //String md5 = CrowdUtil.md5(userPswd);
+        userPswd  = bCryptPasswordEncoder.encode(userPswd);
+        admin.setUserPswd(userPswd);
 
         //2、生成创建时间
         Date date = new Date();
@@ -149,17 +154,19 @@ public class AdminServiceImpl implements AdminService {
             flag = false;
         } else {
             //需要修改密码,newUserPswd先加密
-            newUserPswd=CrowdUtil.md5(newUserPswd);
+            // newUserPswd=CrowdUtil.md5(newUserPswd);
+            // newUserPswd  = bCryptPasswordEncoder.encode(newUserPswd);
             //获取数据库的该对象的密码
             String oldUserPswd = adminMapper.selectByPrimaryKey(admin.getId()).getUserPswd();
             //比较 不相等就更新
-            if (!oldUserPswd.equals(newUserPswd)) {
+            if (! bCryptPasswordEncoder.matches(newUserPswd,oldUserPswd)) {
                 flag = true;
+                newUserPswd  = bCryptPasswordEncoder.encode(newUserPswd);
+                admin.setUserPswd(newUserPswd);
             } else {
                 flag = false;
             }
         }
-        System.out.println(flag);
         try {
             adminMapper.updateByPrimaryKeySelective(admin);
         } catch (Exception e) {
@@ -181,5 +188,22 @@ public class AdminServiceImpl implements AdminService {
         if (roleIdList != null && roleIdList.size() > 0) {
             adminMapper.insertNewRelationship(adminId, roleIdList);
         }
+    }
+
+    @Override
+    public Admin getAdminByLoginAcct(String username) {
+        //1、根据登陆账号查询Admin
+        //1.1 创建AdminExample对象
+        AdminExample example = new AdminExample();
+        //2.2 创建Criteria对象
+        AdminExample.Criteria criteria = example.createCriteria();
+        //2.3 在Criteria对象中封装条件
+        criteria.andLoginAcctEqualTo(username);
+        List<Admin> list = adminMapper.selectByExample(example);
+
+        Admin admin = list.get(0);
+
+        return admin;
+
     }
 }
