@@ -40,7 +40,7 @@ public class CrowdExceptionResolver {
 
     @ExceptionHandler(value =Exception.class)
     public ModelAndView resolveAccessForbiddenExcepiton(Exception exception, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String viewName = "admin-login";
+        String viewName = "system-error";
         return commonResolve(viewName, exception, request, response);
     }
 

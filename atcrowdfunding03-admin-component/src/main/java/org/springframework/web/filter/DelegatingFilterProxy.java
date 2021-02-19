@@ -256,7 +256,6 @@ public class DelegatingFilterProxy extends GenericFilterBean {
                     //2.拼接 SpringMVC 将 IOC 容器存入 ServletContext 域的时候使用的属性名
                     String servletName = "dispatcherServlet";
                     String attrName = FrameworkServlet.SERVLET_CONTEXT_PREFIX + servletName;
-                    System.out.println(attrName+"===============================================");
                    //3.根据 attrName 从 ServletContext 域中获取 IOC 容器对象
                     WebApplicationContext wac = (WebApplicationContext) sc.getAttribute(attrName);
                     if (wac == null) {

@@ -81,7 +81,7 @@ public class WebAppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-/*               .exceptionHandling()
+               .exceptionHandling()
                 .accessDeniedHandler(new AccessDeniedHandler() {
                     @Override
                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
@@ -89,7 +89,7 @@ public class WebAppSecurityConfig extends WebSecurityConfigurerAdapter {
                         request.getRequestDispatcher("/WEB_INF/system-error.jsp").forward(request,response); //请求转发过去
                     }
                 })
-                .and()*/
+                .and()
                 .csrf()
                 .disable()
                 .formLogin()
